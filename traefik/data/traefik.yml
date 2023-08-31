@@ -22,7 +22,7 @@ providers:
 certificatesResolvers:
   cloudflare:
     acme:
-      email: ${CF_EMAIL}
+      email: tclrd@icloud.com
       storage: acme.json
       dnsChallenge:
         provider: cloudflare

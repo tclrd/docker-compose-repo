@@ -23,18 +23,18 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.traefik.entrypoints=http"
-      - "traefik.http.routers.traefik.rule=Host(`traefik-dashboard.local.example.com`)"
-      - "traefik.http.middlewares.traefik-auth.basicauth.users=USER:BASIC_AUTH_PASSWORD"
+      - "traefik.http.routers.traefik.rule=Host(`traefik-dashboard.${SUBDOMAIN}.${DOMAIN_NAME}`)"
+      - "traefik.http.middlewares.traefik-auth.basicauth.users=${DASHBOARD_USERNAME}:${DASHBOARD_PASSWORD}"
       - "traefik.http.middlewares.traefik-https-redirect.redirectscheme.scheme=https"
       - "traefik.http.middlewares.sslheader.headers.customrequestheaders.X-Forwarded-Proto=https"
       - "traefik.http.routers.traefik.middlewares=traefik-https-redirect"
       - "traefik.http.routers.traefik-secure.entrypoints=https"
-      - "traefik.http.routers.traefik-secure.rule=Host(`traefik-dashboard.local.example.com`)"
+      - "traefik.http.routers.traefik-secure.rule=Host(`traefik-dashboard.${SUBDOMAIN}.${DOMAIN_NAME}`)"
       - "traefik.http.routers.traefik-secure.middlewares=traefik-auth"
       - "traefik.http.routers.traefik-secure.tls=true"
       - "traefik.http.routers.traefik-secure.tls.certresolver=cloudflare"
-      - "traefik.http.routers.traefik-secure.tls.domains[0].main=local.example.com"
-      - "traefik.http.routers.traefik-secure.tls.domains[0].sans=*.local.example.com"
+      - "traefik.http.routers.traefik-secure.tls.domains[0].main=${SUBDOMAIN}.${DOMAIN_NAME}"
+      - "traefik.http.routers.traefik-secure.tls.domains[0].sans=*.${SUBDOMAIN}.${DOMAIN_NAME}"
       - "traefik.http.routers.traefik-secure.service=api@internal"
 
 networks:
